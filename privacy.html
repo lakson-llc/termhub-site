@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TermHub - Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #0d0f14; --surface: #161a22; --border: #262b36;
+      --text: #e6e9ef; --muted: #9aa4b2; --accent2: #34d399;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.65; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 56px 24px 96px; }
+    h1 { font-size: 32px; margin: 0 0 4px; letter-spacing: -0.4px; }
+    .eff { color: var(--muted); margin: 0 0 32px; font-size: 15px; }
+    h2 { font-size: 20px; margin: 36px 0 8px; }
+    p, li { color: #cfd6e0; }
+    li { margin: 6px 0; }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent2); }
+    .back { display: inline-block; margin-bottom: 24px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="./index.html">&larr; TermHub</a>
+    <h1>TermHub Privacy Policy</h1>
+    <p class="eff">Effective 26 August 2026 &middot; Published by Lakson LLC</p>
+
+    <p>TermHub is an SSH terminal client for Android. This policy explains what data the app handles and how. In short: TermHub is built so your data stays on your device and with services you control - it does not send your terminal activity, credentials, or backup contents to us.</p>
+
+    <h2>What the app handles</h2>
+    <ul>
+      <li><strong>Connection details and credentials.</strong> The hosts you add and their SSH credentials (passwords, private keys, passphrases) are stored locally on your device. Secrets are kept in the Android Keystore. They are used only to connect to the servers you choose and are never transmitted to us.</li>
+      <li><strong>Direct connections.</strong> When you open a session, the app connects directly from your device to your server. Your SSH traffic, keystrokes, and terminal output do not pass through our servers.</li>
+      <li><strong>Encrypted cloud backup (optional).</strong> If you turn on cloud backup, your hosts, snippets, and settings are encrypted on your device using a passphrase you choose, and the encrypted file is stored in your own Google Drive, in the hidden application-data folder reserved for TermHub. The backup is end-to-end encrypted: it cannot be read without your passphrase, and we never receive your data or your passphrase.</li>
+      <li><strong>Google sign-in.</strong> Cloud backup uses Sign in with Google solely to access TermHub's own application-data folder in your Drive. The app requests only the <code>drive.appdata</code> permission. It does not read, list, or modify your other Drive files, and it does not access your email or profile beyond the basic account identity needed to sign you in. TermHub's use of information from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</li>
+      <li><strong>Voice input (optional).</strong> Speech is transcribed on your device. Audio is not sent to us.</li>
+      <li><strong>Images you send to a host.</strong> When you use the image feature, the selected image is uploaded directly to the SSH server you are connected to, over your own connection.</li>
+      <li><strong>Purchases (optional).</strong> Subscriptions and purchases are processed by Google Play and by RevenueCat, our purchase-management provider. We receive your purchase and subscription status; we do not receive your payment card details.</li>
+    </ul>
+
+    <h2>What we do not do</h2>
+    <ul>
+      <li>We do not sell your personal data.</li>
+      <li>We do not operate servers that collect your terminal content, keystrokes, or SSH credentials.</li>
+      <li>We do not use your backup contents for advertising or any purpose other than storing and restoring your own backup.</li>
+    </ul>
+
+    <h2>Retention and your choices</h2>
+    <ul>
+      <li>Local data is removed when you delete it in the app or uninstall TermHub.</li>
+      <li>You can delete a cloud backup from within the app at any time.</li>
+      <li>You can revoke TermHub's access to your Google account at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+    </ul>
+
+    <h2>Children</h2>
+    <p>TermHub is not directed to children under 13 and does not knowingly collect data from them.</p>
+
+    <h2>Changes</h2>
+    <p>We may update this policy; the effective date above will change accordingly.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy: <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a>.</p>
+  </div>
+</body>
+</html>
