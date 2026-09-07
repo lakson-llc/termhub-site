@@ -88,6 +88,7 @@ footer a{color:var(--muted);}
   <h1>Run Claude Code or Codex from your phone</h1>
   <p class="lede">The agent runs on your own machine inside tmux or herdr. Your phone attaches over SSH and steers it, switch windows, focus panes, dictate, send an image, all from the Command Dial, so most of a check-in never touches the on-screen keyboard.</p>
 
+  <section class="prose"><h2>What is herdr?</h2><p>This walkthrough uses <b>herdr</b>, an agent multiplexer that lives in your terminal. Like tmux, it keeps a session running on your machine so a coding agent survives a disconnect, but it is built around AI coding agents. Install it on your Mac (details at <a href="https://herdr.dev">herdr.dev</a>):</p><pre><code>curl -fsSL https://herdr.dev/install.sh | sh</code></pre><p>Or with Homebrew: <code>brew install herdr</code>.</p><p>Prefer tmux? Every step below is the same. Pick <b>Tmux</b> as the Startup mode and start the session with <code>tmux new -A -s myapp_claude</code> instead of the herdr command.</p></section>
   <section class="prose"><h2>Walkthrough: Claude Code in herdr, from your phone</h2><p>The fastest way to get it is to do it. Start Claude Code in a herdr session on your Mac, then attach to that exact session from your phone.</p></section>
   <section class="prose"><h3>On your Mac</h3></section>
   <ol class="steps">
