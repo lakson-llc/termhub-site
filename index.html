@@ -28,10 +28,6 @@
     .gcard h3 { font-size: 16px; margin: 0; letter-spacing: -0.2px; }
     .gcard p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
     .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.9px; text-transform: uppercase; color: var(--accent2); border: 1px solid rgba(52,211,153,0.4); background: rgba(52,211,153,0.07); border-radius: 20px; padding: 2px 8px; }
-    .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .fcard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
-    .fcard h3 { margin: 0 0 6px; font-size: 17px; }
-    .fcard p { margin: 0; color: var(--muted); font-size: 14.5px; }
     .early { background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(52,211,153,0.06)); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 52px; }
     .early h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px; }
     .early > p { margin: 0 0 16px; color: var(--muted); }
@@ -45,7 +41,7 @@
     footer { margin-top: 52px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 24px; }
     a { color: var(--accent2); }
     footer a { color: var(--muted); }
-    @media (max-width: 560px) { h1 { font-size: 32px; } .gcards, .feat { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { h1 { font-size: 32px; } .gcards { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -56,7 +52,7 @@
     </div>
 
     <h1>A fast, modern SSH terminal for Android.</h1>
-    <p class="tag">Connect to your servers, drive tmux or herdr, and run your favorite AI CLI like Claude Code, Codex, or Pi from a real terminal. Your keys never leave your phone.</p>
+    <p class="tag">TermHub is a real terminal for your phone, not a remote-control wrapper. Connect straight to your own machines, drive tmux or herdr, and run any CLI like Claude Code, Codex, or Pi, with a command dial for the keys a phone keyboard makes painful. Your credentials never leave the device keystore, and there is no TermHub server in the middle.</p>
 
     <div class="sec" id="guides">
       <span class="eyebrow">Guides</span>
@@ -69,17 +65,6 @@
         <a class="gcard" href="guides/voice.html"><div class="row"><h3>Voice dictation</h3></div><p>On-device speech to text with punctuation, straight into the terminal line.</p></a>
         <a class="gcard" href="guides/backup.html"><div class="row"><h3>Encrypted cloud backup</h3></div><p>Move your hosts to a new phone, encrypted with a passphrase only you hold.</p></a>
         <a class="gcard" href="guides/host-check.html"><div class="row"><h3>Host check</h3></div><p>Make sure your host is phone-ready, from tmux and herdr visibility to sleep.</p></a>
-      </div>
-    </div>
-
-    <div class="sec">
-      <span class="eyebrow">Why TermHub</span>
-      <h2>Built for real work on a phone</h2>
-      <div class="feat" style="margin-top:8px;">
-        <div class="fcard"><h3>Real terminal, not a wrapper</h3><p>A full PTY. Drive Claude Code, Codex, Pi, or any CLI or TUI directly instead of through someone else's UI.</p></div>
-        <div class="fcard"><h3>Built for one hand</h3><p>A signature command dial puts common keys, snippets, and shortcuts a thumb-drag away, so you are not fighting a tiny keyboard.</p></div>
-        <div class="fcard"><h3>Your keys stay yours</h3><p>SSH credentials live in your device's secure keystore and connect straight to your hosts.</p></div>
-        <div class="fcard"><h3>No middle server</h3><p>TermHub has no backend. Your keys, sessions, and data never pass through us.</p></div>
       </div>
     </div>
 
