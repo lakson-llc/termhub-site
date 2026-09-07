@@ -67,6 +67,12 @@ footer a{color:var(--muted);}
 .checks li:first-child{border-top:none;}
 .checks .lbl{color:var(--accent2);font-family:var(--mono);font-size:12px;margin-right:8px;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:1px 7px;}
 .runline{font-family:var(--mono);font-size:13px;color:var(--muted);margin:10px 0 0;}
+.joinsteps{display:flex;flex-direction:column;gap:10px;max-width:440px;margin:4px auto 14px;text-align:left;}
+.jbtn{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--text);text-decoration:none;transition:border-color .15s ease,transform .15s ease;}
+.jbtn:hover{border-color:var(--accent2);transform:translateY(-1px);}
+.jbtn b{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--accent2);color:#052e1c;font-family:var(--mono);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.jbtn span{font-size:14px;line-height:1.45;color:var(--muted);}
+.jbtn strong{color:var(--text);font-weight:600;}
 @media (max-width:560px){h1{font-size:30px;}.lede{font-size:17px;}.step{padding-left:48px;}.pagenav{flex-direction:column;}.navlinks{gap:14px;}}
 </style>
 <div class="wrap">
@@ -74,7 +80,6 @@ footer a{color:var(--muted);}
     <div class="brand"><div class="logo">&gt;_</div><strong>TermHub</strong></div>
     <div class="navlinks"><a href="../">Home</a><a href="index.html">All guides</a></div>
   </div>
-  <div class="draftbar"><b>DRAFT</b> &nbsp;Preview built from live Android screenshots. Copy, Play Store link and privacy link are still to be finalized.</div>
   <span class="eyebrow">Guide</span>
   <h1>Voice dictation into the terminal</h1>
   <p class="lede">Speak a command and TermHub types it onto the shell line - transcribed entirely on your phone, with the audio never leaving the device. Two engines cover everyday use and higher accuracy, and an optional cleanup pass trims the ums and uhs.</p>
@@ -98,9 +103,12 @@ footer a{color:var(--muted);}
 
   <div class="cta">
     <h3>Get TermHub</h3>
-    <p>A fast, modern SSH terminal for Android - your keys, your hosts, your backup.</p>
-    <a class="btn" href="#">Get it on Google Play</a>
-    <div class="ph">Play Store link goes here once the listing URL is set.</div>
+    <p>TermHub is in early release - closed testing - so getting in is two quick steps:</p>
+    <div class="joinsteps">
+      <a class="jbtn" href="https://groups.google.com/g/termhub-testers"><b>1</b><span><strong>Join the tester group</strong><br>groups.google.com/g/termhub-testers</span></a>
+      <a class="jbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><b>2</b><span><strong>Opt in &amp; install from Google Play</strong><br>once your group membership is active</span></a>
+    </div>
+    <div class="ph">Takes a couple of minutes; access usually comes through within an hour. If anything snags, <a href="mailto:lakson2@gmail.com">email us</a> and we'll walk you through it.</div>
   </div>
   <footer>
     <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>

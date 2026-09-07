@@ -45,6 +45,16 @@
     a { color: var(--accent2); text-decoration: none; }
     a:hover { text-decoration: underline; }
     code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent2); }
+    .early { background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(52,211,153,0.06)); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 34px; }
+    .early h2 { margin: 0 0 6px; font-size: 20px; }
+    .early > p { margin: 0 0 16px; color: var(--muted); }
+    .joinsteps { display: flex; flex-direction: column; gap: 10px; max-width: 460px; }
+    .jbtn { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); text-decoration: none; }
+    .jbtn:hover { border-color: var(--accent2); text-decoration: none; }
+    .jbtn b { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent2); color: #052e1c; font-family: ui-monospace, Menlo, monospace; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+    .jbtn span { font-size: 14px; line-height: 1.45; color: var(--muted); }
+    .jbtn strong { color: var(--text); font-weight: 600; }
+    .early .note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
   </style>
 </head>
 <body>
@@ -63,7 +73,15 @@
       <div class="card"><h2>On-device voice</h2><p>Dictation is transcribed on your phone. Audio never leaves your device.</p></div>
     </div>
 
-    <p style="margin-top:34px;font-size:17px;"><a href="./guides/">Setup guides &mdash; get connected in a few minutes &rarr;</a></p>
+    <div class="early">
+      <h2>Get TermHub &mdash; early release</h2>
+      <p>TermHub is in closed testing right now, so getting in is two quick steps:</p>
+      <div class="joinsteps">
+        <a class="jbtn" href="https://groups.google.com/g/termhub-testers"><b>1</b><span><strong>Join the tester group</strong><br>groups.google.com/g/termhub-testers</span></a>
+        <a class="jbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><b>2</b><span><strong>Opt in &amp; install from Google Play</strong><br>once your group membership is active</span></a>
+      </div>
+      <p class="note">Takes a couple of minutes; access usually comes through within an hour. New here? Start with the <a href="./guides/">setup guides</a>, or email <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a> if anything snags.</p>
+    </div>
 
     <footer>
       <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
