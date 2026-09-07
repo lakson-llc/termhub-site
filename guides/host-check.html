@@ -78,15 +78,15 @@ footer a{color:var(--muted);}
 <div class="wrap">
   <div class="topbar">
     <div class="brand"><div class="logo">&gt;_</div><strong>TermHub</strong></div>
-    <div class="navlinks"><a href="../">Home</a><a href="index.html">All guides</a></div>
+    <div class="navlinks"><a href="../">Home</a><a href="../#guides">All guides</a></div>
   </div>
   <span class="eyebrow">Guide</span>
   <h1>Is your host phone-ready?</h1>
   <p class="lede">Before you rely on TermHub from your phone, run one quick check on the host itself. It catches the two things that quietly break a mobile setup: a multiplexer your phone can't see, and a machine that falls asleep.</p>
 
-  <section class="prose"><h2>Run this on your host</h2><p>Copy the script and run it <em>on the machine you connect to</em> - your Mac or server, not the phone. It prints an <code>OK</code>, <code>WARN</code>, or <code>FAIL</code> for each thing TermHub needs, and only reads your settings; nothing is uploaded or changed.</p>
+  <section class="prose"><h2>Run this on your host</h2><p>Copy the script and run it <em>on the machine you connect to</em>, your Mac or server, not the phone. It prints an <code>OK</code>, <code>WARN</code>, or <code>FAIL</code> for each thing TermHub needs, and only reads your settings; nothing is uploaded or changed.</p>
   <pre><code>#!/usr/bin/env bash
-# TermHub host check - runs entirely on your machine. Nothing is uploaded.
+# TermHub host check, runs entirely on your machine. Nothing is uploaded.
 # Review it, then run on your host:   bash host-check.sh
 set -u
 ok(){   echo &quot;  OK    $1  $2&quot;; }
@@ -96,7 +96,7 @@ fail(){ echo &quot;  FAIL  $1  $2&quot;; }
 echo &quot;TermHub host check&quot;
 os=$(uname -s)
 
-# SSHD - can TermHub reach an SSH server here at all?
+# SSHD, can TermHub reach an SSH server here at all?
 if [ &quot;$os&quot; = Darwin ]; then
   systemsetup -getremotelogin 2&gt;/dev/null | grep -qi on \
     &amp;&amp; ok   &quot;SSHD &quot; &quot;Remote Login is on&quot; \
@@ -106,58 +106,58 @@ else
     &amp;&amp; ok &quot;SSHD &quot; &quot;sshd is running&quot; || warn &quot;SSHD &quot; &quot;sshd not detected&quot;
 fi
 
-# SHELL - your login shell
+# SHELL, your login shell
 ok &quot;SHELL&quot; &quot;login shell is ${SHELL##*/}&quot;
 
-# tmux / herdr - installed AND visible to a non-login SSH (how TermHub attaches)
+# tmux / herdr, installed AND visible to a non-login SSH (how TermHub attaches)
 for m in tmux herdr; do
   here=$(command -v &quot;$m&quot; 2&gt;/dev/null)
   seen=$(&quot;$SHELL&quot; -c &quot;command -v $m&quot; 2&gt;/dev/null)
   if [ -n &quot;$here&quot; ] &amp;&amp; [ -n &quot;$seen&quot; ]; then
     ok   &quot;$m &quot; &quot;visible to SSH  ($here)&quot;
   elif [ -n &quot;$here&quot; ]; then
-    fail &quot;$m &quot; &quot;installed at $here but a non-login SSH cannot see it - PATH trap&quot;
+    fail &quot;$m &quot; &quot;installed at $here but a non-login SSH cannot see it, PATH trap&quot;
   else
     warn &quot;$m &quot; &quot;not installed&quot;
   fi
 done
 
-# SLEEP - will the Mac stay reachable while you are away?
+# SLEEP, will the Mac stay reachable while you are away?
 if [ &quot;$os&quot; = Darwin ]; then
   pmset -g 2&gt;/dev/null | grep -qiE &#x27;SleepDisabled +1| sleep +0&#x27; \
     &amp;&amp; ok   &quot;SLEEP&quot; &quot;the Mac is set to stay awake&quot; \
     || warn &quot;SLEEP&quot; &quot;the Mac may sleep and drop connections&quot;
 fi
 
-echo &quot;Done - any FAIL or WARN is explained on the page you copied this from.&quot;
+echo &quot;Done, any FAIL or WARN is explained on the page you copied this from.&quot;
 </code></pre>
   <p class="runline">Paste it into your host's terminal, or save it as <code>host-check.sh</code> and run <code>bash host-check.sh</code>.</p></section>
   <section class="prose"><h2>What each line means</h2>
   <ul class="checks">
     <li><span class="lbl">SSHD</span> An SSH server is running, so TermHub can connect at all. On a Mac that's <b>Remote Login</b> (System Settings &rsaquo; General &rsaquo; Sharing).</li>
-    <li><span class="lbl">SHELL</span> Your login shell - it tells you which startup file matters for the PATH trap below.</li>
+    <li><span class="lbl">SHELL</span> Your login shell, it tells you which startup file matters for the PATH trap below.</li>
     <li><span class="lbl">tmux / herdr</span> Installed <em>and</em> visible to a non-login SSH. A <code>FAIL</code> here is the one that bites people.</li>
     <li><span class="lbl">SLEEP</span> The Mac won't fall asleep and drop your session while you're away.</li>
   </ul></section>
-  <section class="prose"><h2>The multiplexer your phone can't see</h2><p>On Apple-Silicon Homebrew hosts, <code>/opt/homebrew/bin</code> is often added from <code>~/.zprofile</code>, which a non-login SSH never reads - so a healthy tmux or herdr comes back as a <code>FAIL</code>. Fix it by adding Homebrew's path to your shell's non-login startup so every SSH session can find it:</p><pre><code><span class="c"># add to ~/.zshenv</span>
+  <section class="prose"><h2>The multiplexer your phone can't see</h2><p>On Apple-Silicon Homebrew hosts, <code>/opt/homebrew/bin</code> is often added from <code>~/.zprofile</code>, which a non-login SSH never reads, so a healthy tmux or herdr comes back as a <code>FAIL</code>. Fix it by adding Homebrew's path to your shell's non-login startup so every SSH session can find it:</p><pre><code><span class="c"># add to ~/.zshenv</span>
 export PATH="/opt/homebrew/bin:$PATH"</code></pre></section>
-  <section class="prose"><h2>Keeping the host awake</h2><p>A phone terminal can't wake a sleeping Mac. For a machine that should stay reachable - especially an overnight agent - set Energy Saver so it doesn't sleep, or run <code>caffeinate</code> while it matters.</p></section>
+  <section class="prose"><h2>Keeping the host awake</h2><p>A phone terminal can't wake a sleeping Mac. For a machine that should stay reachable, especially an overnight agent, set Energy Saver so it doesn't sleep, or run <code>caffeinate</code> while it matters.</p></section>
   <div class="note">
     <h3>Once every line is OK</h3>
     <ul>
       <li>SSH is reachable, tmux/herdr resolve over a non-login SSH, and the host won't sleep under you.</li>
-      <li>You're ready - head to <a href="getting-started.html">Getting started</a> and save your first host.</li>
+      <li>You're ready, head to <a href="getting-started.html">Getting started</a> and save your first host.</li>
     </ul>
   </div>
 
   <nav class="pagenav">
-    <a href="index.html"><span class="dir">← Back</span><span class="tt">All guides</span></a>
+    <a href="../#guides"><span class="dir">← Back</span><span class="tt">All guides</span></a>
     <a class="next" href="getting-started.html"><span class="dir">Next →</span><span class="tt">Getting started: your first connection</span></a>
   </nav>
 
   <div class="cta">
     <h3>Get TermHub</h3>
-    <p>TermHub is in early release - closed testing - so getting in is two quick steps:</p>
+    <p>TermHub is in early release, closed testing, so getting in is two quick steps:</p>
     <div class="joinsteps">
       <a class="jbtn" href="https://groups.google.com/g/termhub-testers"><b>1</b><span><strong>Join the tester group</strong><br>groups.google.com/g/termhub-testers</span></a>
       <a class="jbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><b>2</b><span><strong>Opt in &amp; install from Google Play</strong><br>once your group membership is active</span></a>
@@ -166,7 +166,7 @@ export PATH="/opt/homebrew/bin:$PATH"</code></pre></section>
   </div>
   <footer>
     <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
-    <p><a href="../">Home</a> &middot; <a href="index.html">All guides</a></p>
+    <p><a href="../">Home</a> &middot; <a href="../#guides">All guides</a></p>
   </footer>
 
 <script>

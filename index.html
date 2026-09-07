@@ -5,93 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TermHub</title>
   <style>
-    :root {
-      --bg: #0d0f14;
-      --surface: #161a22;
-      --border: #262b36;
-      --text: #e6e9ef;
-      --muted: #9aa4b2;
-      --accent: #7c5cff;
-      --accent2: #34d399;
-    }
+    :root { --bg:#0d0f14; --surface:#161a22; --surface2:#1b2029; --border:#262b36; --text:#e6e9ef; --muted:#9aa4b2; --faint:#6b7482; --accent:#7c5cff; --accent2:#34d399; --mono:ui-monospace,SFMono-Regular,Menlo,monospace; }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-    }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 44px 24px 96px; }
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .brand { display: flex; align-items: center; gap: 14px; }
+    .logo { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), #4f46e5); display: grid; place-items: center; font-family: var(--mono); font-weight: 700; color: #fff; font-size: 20px; }
     .topnav a { color: var(--accent2); text-decoration: none; font-size: 15px; border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px; white-space: nowrap; }
-    .topnav a:hover { border-color: var(--accent2); text-decoration: none; }
-    .logo {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), #4f46e5);
-      display: grid; place-items: center;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-weight: 700; color: #fff; font-size: 20px;
-    }
-    h1 { font-size: 40px; margin: 28px 0 8px; letter-spacing: -0.5px; }
-    .tag { color: var(--muted); font-size: 19px; margin: 0 0 40px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 24px 26px; margin: 16px 0;
-    }
-    .card h2 { margin: 0 0 6px; font-size: 18px; }
-    .card p { margin: 0; color: var(--muted); }
-    .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
-    @media (max-width: 560px) { .feat { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
-    footer { margin-top: 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); padding-top: 24px; }
-    a { color: var(--accent2); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent2); }
-    .early { background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(52,211,153,0.06)); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 34px; }
-    .early h2 { margin: 0 0 6px; font-size: 20px; }
+    .topnav a:hover { border-color: var(--accent2); }
+    h1 { font-size: 40px; margin: 28px 0 10px; letter-spacing: -0.5px; }
+    .tag { color: var(--muted); font-size: 19px; margin: 0 0 8px; max-width: 60ch; }
+    .sec { margin-top: 52px; }
+    .eyebrow { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .sec h2 { font-size: 26px; letter-spacing: -0.5px; margin: 0 0 8px; }
+    .sec .sub { color: var(--muted); margin: 0 0 22px; max-width: 60ch; }
+    .gcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .gcard { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; color: var(--text); text-decoration: none; transition: border-color .15s ease, transform .15s ease, background .15s ease; }
+    .gcard:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface2); }
+    .gcard .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+    .gcard h3 { font-size: 16px; margin: 0; letter-spacing: -0.2px; }
+    .gcard p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+    .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.9px; text-transform: uppercase; color: var(--accent2); border: 1px solid rgba(52,211,153,0.4); background: rgba(52,211,153,0.07); border-radius: 20px; padding: 2px 8px; }
+    .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .fcard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
+    .fcard h3 { margin: 0 0 6px; font-size: 17px; }
+    .fcard p { margin: 0; color: var(--muted); font-size: 14.5px; }
+    .early { background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(52,211,153,0.06)); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 52px; }
+    .early h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px; }
     .early > p { margin: 0 0 16px; color: var(--muted); }
     .joinsteps { display: flex; flex-direction: column; gap: 10px; max-width: 460px; }
     .jbtn { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); text-decoration: none; }
-    .jbtn:hover { border-color: var(--accent2); text-decoration: none; }
-    .jbtn b { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent2); color: #052e1c; font-family: ui-monospace, Menlo, monospace; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+    .jbtn:hover { border-color: var(--accent2); }
+    .jbtn b { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent2); color: #052e1c; font-family: var(--mono); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
     .jbtn span { font-size: 14px; line-height: 1.45; color: var(--muted); }
     .jbtn strong { color: var(--text); font-weight: 600; }
     .early .note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
+    footer { margin-top: 52px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 24px; }
+    a { color: var(--accent2); }
+    footer a { color: var(--muted); }
+    @media (max-width: 560px) { h1 { font-size: 32px; } .gcards, .feat { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
-      <div class="brand">
-        <div class="logo">&gt;_</div>
-        <strong style="font-size:18px;">TermHub</strong>
-      </div>
-      <nav class="topnav"><a href="./guides/">Setup guides &rarr;</a></nav>
+      <div class="brand"><div class="logo">&gt;_</div><strong style="font-size:18px;">TermHub</strong></div>
+      <nav class="topnav"><a href="#get">Get early access &rarr;</a></nav>
     </div>
+
     <h1>A fast, modern SSH terminal for Android.</h1>
-    <p class="tag">Connect to your servers, run commands, and keep your hosts in sync - with an encrypted backup only you can unlock.</p>
+    <p class="tag">Connect to your servers, drive tmux or herdr, and run your favorite AI CLI like Claude Code, Codex, or Pi from a real terminal. Your keys never leave your phone.</p>
 
-    <div class="feat">
-      <div class="card"><h2>SSH terminal</h2><p>A full terminal with a signature command dial, voice input, and image send - built for real work on the go.</p></div>
-      <div class="card"><h2>Encrypted cloud backup</h2><p>Optional. Your hosts and settings are encrypted on your device with a passphrase only you know, then stored in your own Google Drive.</p></div>
-      <div class="card"><h2>Your keys stay yours</h2><p>SSH credentials live in your device's secure keystore and connect directly to your hosts - never through our servers.</p></div>
-      <div class="card"><h2>On-device voice</h2><p>Dictation is transcribed on your phone. Audio never leaves your device.</p></div>
+    <div class="sec" id="guides">
+      <span class="eyebrow">Guides</span>
+      <h2>Set up and get connected</h2>
+      <p class="sub">Everything from your first connection to running a coding agent in tmux or herdr. Each guide takes a few minutes and uses real screenshots.</p>
+      <div class="gcards">
+        <a class="gcard" href="guides/getting-started.html"><div class="row"><h3>Getting started</h3><span class="pill">Start here</span></div><p>Install, add a host, sign in, connect, and drive the Command Dial without the keyboard.</p></a>
+        <a class="gcard" href="guides/tailscale.html"><div class="row"><h3>Reach any server with Tailscale</h3></div><p>A private path in with no port forwarding, plus the LAN and tailnet fallback trick.</p></a>
+        <a class="gcard" href="guides/agents.html"><div class="row"><h3>Run Claude Code, Codex, or Pi</h3></div><p>Keep an agent alive in tmux or herdr and steer it from the dial, no keyboard needed.</p></a>
+        <a class="gcard" href="guides/voice.html"><div class="row"><h3>Voice dictation</h3></div><p>On-device speech to text with punctuation, straight into the terminal line.</p></a>
+        <a class="gcard" href="guides/backup.html"><div class="row"><h3>Encrypted cloud backup</h3></div><p>Move your hosts to a new phone, encrypted with a passphrase only you hold.</p></a>
+        <a class="gcard" href="guides/host-check.html"><div class="row"><h3>Host check</h3></div><p>Make sure your host is phone-ready, from tmux and herdr visibility to sleep.</p></a>
+      </div>
     </div>
 
-    <div class="early">
-      <h2>Get TermHub &mdash; early release</h2>
+    <div class="sec">
+      <span class="eyebrow">Why TermHub</span>
+      <h2>Built for real work on a phone</h2>
+      <div class="feat" style="margin-top:8px;">
+        <div class="fcard"><h3>Real terminal, not a wrapper</h3><p>A full PTY with a signature command dial, voice input, and image send, so you drive any CLI or TUI directly.</p></div>
+        <div class="fcard"><h3>Your keys stay yours</h3><p>SSH credentials live in your device's secure keystore and connect straight to your hosts, never through our servers.</p></div>
+        <div class="fcard"><h3>Encrypted cloud backup</h3><p>Optional. Hosts and settings are encrypted on-device with a passphrase only you know, then stored in your own Google Drive.</p></div>
+        <div class="fcard"><h3>On-device voice</h3><p>Dictation is transcribed on your phone. Audio never leaves your device.</p></div>
+      </div>
+    </div>
+
+    <div class="early" id="get">
+      <h2>Get TermHub, early release</h2>
       <p>TermHub is in closed testing right now, so getting in is two quick steps:</p>
       <div class="joinsteps">
         <a class="jbtn" href="https://groups.google.com/g/termhub-testers"><b>1</b><span><strong>Join the tester group</strong><br>groups.google.com/g/termhub-testers</span></a>
-        <a class="jbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><b>2</b><span><strong>Opt in &amp; install from Google Play</strong><br>once your group membership is active</span></a>
+        <a class="jbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><b>2</b><span><strong>Opt in and install from Google Play</strong><br>once your group membership is active</span></a>
       </div>
-      <p class="note">Takes a couple of minutes; access usually comes through within an hour. New here? Start with the <a href="./guides/">setup guides</a>, or email <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a> if anything snags.</p>
+      <p class="note">It takes a couple of minutes, and access usually comes through within an hour. Email <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a> if anything snags.</p>
     </div>
 
     <footer>
       <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
-      <p><a href="./guides/">Guides</a> &middot; <a href="./privacy.html">Privacy Policy</a></p>
+      <p><a href="./privacy.html">Privacy Policy</a></p>
     </footer>
   </div>
 </body>
