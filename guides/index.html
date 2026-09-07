@@ -1,0 +1,106 @@
+<title>TermHub Guides</title>
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #161a22; --surface2: #1b2029; --border: #262b36;
+    --text: #e6e9ef; --muted: #9aa4b2; --faint: #6b7482;
+    --accent: #7c5cff; --accent2: #34d399;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 40px 24px 96px; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 48px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo { width: 40px; height: 40px; border-radius: 11px; background: linear-gradient(135deg, var(--accent), #4f46e5); display: grid; place-items: center; font-family: var(--mono); font-weight: 700; color: #fff; font-size: 18px; }
+  .brand strong { font-size: 17px; letter-spacing: -0.2px; }
+  .crumb { color: var(--muted); font-size: 14px; text-decoration: none; }
+  .crumb:hover { color: var(--accent2); }
+
+  .eyebrow { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  h1 { font-size: 40px; line-height: 1.08; letter-spacing: -0.9px; margin: 0 0 16px; text-wrap: balance; }
+  .lede { color: var(--muted); font-size: 19px; margin: 0 0 44px; max-width: 60ch; }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .card {
+    display: block; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px 22px; color: var(--text); text-decoration: none;
+    transition: border-color .15s ease, transform .15s ease, background .15s ease;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; background: var(--surface2); }
+  .card.soon { border-style: dashed; }
+  .card .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .card h2 { font-size: 16px; margin: 0; letter-spacing: -0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+  .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.9px; text-transform: uppercase; color: var(--faint); border: 1px solid var(--border); border-radius: 20px; padding: 3px 9px; }
+  .pill.ready { color: var(--accent2); border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.07); }
+
+  .cta { margin-top: 52px; background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(52,211,153,0.06)); border: 1px solid var(--border); border-radius: 18px; padding: 30px 28px; text-align: center; }
+  .cta h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px; }
+  .cta p { margin: 0 0 18px; color: var(--muted); font-size: 15px; }
+  .btn { display: inline-block; background: var(--accent2); color: #052e1c; font-weight: 700; padding: 12px 22px; border-radius: 11px; font-size: 15px; text-decoration: none; }
+  .btn:hover { filter: brightness(1.06); }
+  .cta .placeholder { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 12px; }
+
+  footer { margin-top: 52px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 22px; }
+  footer a { color: var(--muted); }
+  .draftbar { background: rgba(245,158,11,0.09); border: 1px solid rgba(245,158,11,0.35); color: #f5c26b; font-family: var(--mono); font-size: 12px; border-radius: 10px; padding: 10px 14px; margin-bottom: 30px; }
+  .draftbar b { color: #f59e0b; }
+  a { color: var(--accent2); }
+
+  @media (max-width: 560px) { h1 { font-size: 31px; } .lede { font-size: 17px; } .cards { grid-template-columns: 1fr; } .card { padding: 20px; } }
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><div class="logo">&gt;_</div><strong>TermHub</strong></div>
+    <a class="crumb" href="../">Home</a>
+  </div>
+
+  <div class="draftbar"><b>DRAFT</b> &nbsp;Preview built from live Android screenshots. Every guide is written and clickable; Play Store link and privacy link are still to be finalized.</div>
+
+  <span class="eyebrow">Guides</span>
+  <h1>Using TermHub on Android</h1>
+  <p class="lede">A real SSH terminal in your pocket. Start with your first connection, then reach any machine privately, keep a coding agent alive, dictate commands, and carry your hosts to a new phone. Your keys never leave your device.</p>
+
+  <div class="cards">
+    <a class="card" href="getting-started.html">
+      <div class="row"><h2>Getting started</h2><span class="pill ready">Ready</span></div>
+      <p>Install, add a host, sign in, connect, and drive the Command Dial - without the keyboard.</p>
+    </a>
+    <a class="card" href="tailscale.html">
+      <div class="row"><h2>Reach any server with Tailscale</h2><span class="pill ready">Ready</span></div>
+      <p>A private path in with no port forwarding, plus the LAN + tailnet fallback trick.</p>
+    </a>
+    <a class="card" href="agents.html">
+      <div class="row"><h2>Run Claude Code / Codex</h2><span class="pill ready">Ready</span></div>
+      <p>Keep an agent alive in tmux or herdr and steer it from the dial - keyboardless.</p>
+    </a>
+    <a class="card" href="voice.html">
+      <div class="row"><h2>Voice dictation</h2><span class="pill ready">Ready</span></div>
+      <p>On-device speech to text with punctuation, straight into the terminal line.</p>
+    </a>
+    <a class="card" href="backup.html">
+      <div class="row"><h2>Encrypted cloud backup</h2><span class="pill ready">Ready</span></div>
+      <p>Move your hosts to a new phone - encrypted with a passphrase only you hold.</p>
+    </a>
+    <a class="card" href="host-check.html">
+      <div class="row"><h2>Host check</h2><span class="pill ready">Ready</span></div>
+      <p>Make sure your host is phone-ready - tmux/herdr visibility and sleep.</p>
+    </a>
+  </div>
+
+  <div class="cta">
+    <h3>Get TermHub</h3>
+    <p>A fast, modern SSH terminal for Android - your keys, your hosts, your backup.</p>
+    <a class="btn" href="#">Get it on Google Play</a>
+    <div class="placeholder">Play Store link goes here once you share the listing URL.</div>
+  </div>
+
+  <footer>
+    <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
+    <p><a href="../privacy.html">Privacy Policy</a></p>
+  </footer>
+</div>
