@@ -44,6 +44,8 @@
     .jbtn b { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent2); color: #052e1c; font-family: var(--mono); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
     .jbtn span { font-size: 14px; line-height: 1.45; color: var(--muted); }
     .jbtn strong { color: var(--text); font-weight: 600; }
+    .playbtn { display: inline-block; margin: 6px 0 2px; }
+    .playbtn img { display: block; height: 76px; width: auto; }
     .early .note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
     footer { margin-top: 52px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 24px; }
     a { color: var(--accent2); }
@@ -55,7 +57,7 @@
   <div class="wrap">
     <div class="topbar">
       <div class="brand"><img class="logo" src="logo.png" alt="TermHub" /><strong style="font-size:18px;">TermHub</strong></div>
-      <nav class="topnav"><a href="#get">Get early access &rarr;</a></nav>
+      <nav class="topnav"><a href="#get">Install &rarr;</a></nav>
     </div>
 
     <h1>A fast, modern SSH terminal for Android.</h1>
@@ -89,19 +91,16 @@
     </div>
 
     <div class="early" id="get">
-      <h2>Get TermHub, early release</h2>
-      <p>TermHub is in closed testing right now, so getting in is two quick steps:</p>
-      <div class="joinsteps">
-        <a class="jbtn" href="https://groups.google.com/g/termhub-testers"><b>1</b><span><strong>Join the tester group</strong><br>groups.google.com/g/termhub-testers</span></a>
-        <a class="jbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><b>2</b><span><strong>Opt in and install from Google Play</strong><br>once your group membership is active</span></a>
-      </div>
-      <p class="note">It takes a couple of minutes, and access usually comes through within an hour. Email <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a> if anything snags.</p>
+      <h2>Get TermHub</h2>
+      <p>TermHub is live on Google Play. Install it and connect to your first host in a couple of minutes.</p>
+      <a class="playbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_us/generic/en_badge_web_generic.png" alt="Get it on Google Play" /></a>
+      <p class="note">Free to install. Questions? Email <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a>.</p>
     </div>
 
     <footer>
       <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
       <p><a href="./privacy.html">Privacy Policy</a></p>
-  <p style="font-size:12px;color:var(--faint);margin-top:10px;">Site updated 2026-09-07 04:51 UTC</p>
+  <p style="font-size:12px;color:var(--faint);margin-top:10px;">Site updated 2026-09-20 03:40 UTC</p>
     </footer>
   </div>
 </body>
