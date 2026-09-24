@@ -30,6 +30,7 @@
     .caveats b { color: var(--text); }
     .gcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .gcard { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; color: var(--text); text-decoration: none; transition: border-color .15s ease, transform .15s ease, background .15s ease; }
+    .gcard:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .gcard:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface2); }
     .gcard .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
     .gcard h3 { font-size: 16px; margin: 0; letter-spacing: -0.2px; }
@@ -71,6 +72,7 @@
         <a class="gcard" href="guides/getting-started.html"><div class="row"><h3>Getting started</h3><span class="pill">Start here</span></div><p>Install, add a host, sign in, connect, and drive the Command Dial without the keyboard.</p></a>
         <a class="gcard" href="guides/tailscale.html"><div class="row"><h3>Reach any server with Tailscale</h3></div><p>A private path in with no port forwarding, plus the LAN and tailnet fallback trick.</p></a>
         <a class="gcard" href="guides/agents.html"><div class="row"><h3>Run Claude Code, Codex, or Pi</h3></div><p>Keep an agent alive in tmux or herdr and steer it from the dial, no keyboard needed.</p></a>
+        <a class="gcard" href="guides/keyboard.html"><div class="row"><h3>Shortcut bar</h3><span class="pill">New</span></div><p>Agent keys above the keyboard, more keys a swipe away, and your commands as one-tap chips.</p></a>
         <a class="gcard" href="guides/voice.html"><div class="row"><h3>Voice dictation</h3></div><p>On-device speech to text with punctuation, straight into the terminal line.</p></a>
         <a class="gcard" href="guides/backup.html"><div class="row"><h3>Encrypted cloud backup</h3></div><p>Move your hosts to a new phone, encrypted with a passphrase only you hold.</p></a>
         <a class="gcard" href="guides/host-check.html"><div class="row"><h3>Host check</h3></div><p>Make sure your host is phone-ready, from tmux and herdr visibility to sleep.</p></a>
@@ -84,6 +86,7 @@
       <ul class="edges">
         <li><b>Out-of-band multiplexer control.</b> tmux and herdr window and pane commands run on a separate SSH channel, so they never get typed into your agent as input. No general SSH client documents this.</li>
         <li><b>Keyboardless Command Dial.</b> A radial control for common keys, arrows, snippets, and voice. The soft keyboard only comes up when you type a long command.</li>
+        <li><b>A keyboard built for agents.</b> A shortcut bar puts esc, shift-tab, Ctrl-C, tab, ctrl, and arrows above the letters, with more keys a swipe away and your saved commands as one-tap chips. Rearrange it any way you like.</li>
         <li><b>No backend, no account.</b> Your keys live in the device's secure keystore and connect straight to your host. Nothing routes through a TermHub server.</li>
         <li><b>On-device voice and encrypted backup.</b> Dictation is transcribed on the phone. Backups are encrypted with a passphrase only you hold, in your own Google Drive.</li>
       </ul>
@@ -100,7 +103,7 @@
     <footer>
       <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
       <p><a href="./privacy.html">Privacy Policy</a></p>
-  <p style="font-size:12px;color:var(--faint);margin-top:10px;">Site updated 2026-09-20 03:40 UTC</p>
+  <p style="font-size:12px;color:var(--faint);margin-top:10px;">Site updated 2026-09-24 04:30 UTC</p>
     </footer>
   </div>
 </body>

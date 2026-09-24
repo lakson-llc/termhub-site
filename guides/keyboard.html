@@ -1,0 +1,145 @@
+<title>TermHub Shortcut Bar</title>
+<style>
+:root{--bg:#0d0f14;--surface:#161a22;--surface2:#1b2029;--border:#262b36;--text:#e6e9ef;--muted:#9aa4b2;--faint:#6b7482;--accent:#7c5cff;--accent2:#34d399;--warn:#f59e0b;--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:34px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:40px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{width:42px;height:42px;border-radius:11px;box-shadow:0 0 22px rgba(52,211,153,0.45);}
+.brand strong{font-size:17px;letter-spacing:-0.2px;}
+.navlinks{display:flex;gap:18px;}
+.navlinks a{color:var(--muted);font-size:14px;text-decoration:none;}
+.navlinks a:hover{color:var(--accent2);}
+.eyebrow{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+h1{font-size:38px;line-height:1.1;letter-spacing:-0.8px;margin:0 0 16px;text-wrap:balance;}
+.lede{color:var(--muted);font-size:19px;margin:0 0 8px;max-width:62ch;}
+.shot-img{display:block;width:100%;max-width:300px;margin:24px auto;border-radius:18px;border:1px solid var(--border);box-shadow:0 10px 34px rgba(0,0,0,0.45);}
+.shot-wide{display:block;width:100%;margin:20px auto 6px;border-radius:12px;border:1px solid var(--border);box-shadow:0 14px 44px rgba(0,0,0,0.55);}
+.shot-crop{display:block;width:100%;max-width:460px;margin:22px auto 6px;border-radius:14px;border:1px solid var(--border);box-shadow:0 12px 36px rgba(0,0,0,0.5);}
+.demo{display:block;width:100%;max-width:360px;margin:26px auto 4px;border-radius:16px;border:1px solid var(--border);box-shadow:0 14px 44px rgba(0,0,0,0.55);background:#0b0d11;}
+.democap{text-align:center;color:var(--faint);font-size:13px;margin:0 0 6px;}
+.shotrow{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:6px 0;}
+.shotrow .shot-img{margin:14px 0;width:47%;min-width:230px;max-width:300px;}
+.assumes{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin:32px 0;}
+.assumes h3{margin:0 0 10px;font-size:16px;}
+.assumes ul{margin:0;padding-left:18px;color:var(--muted);}
+.assumes li{margin-bottom:6px;}
+.assumes li b{color:var(--text);font-weight:600;}
+.steps{list-style:none;counter-reset:step;padding:0;margin:36px 0 0;}
+.step{counter-increment:step;position:relative;padding:0 0 32px 56px;}
+.step:not(:last-child)::before{content:"";position:absolute;left:17px;top:40px;bottom:6px;width:2px;background:linear-gradient(var(--border),transparent);}
+.step::after{content:counter(step);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--accent2);font-family:var(--mono);font-weight:700;font-size:15px;display:grid;place-items:center;}
+.step h2{font-size:20px;margin:4px 0 8px;letter-spacing:-0.3px;}
+.step p{margin:0 0 12px;color:#c7cdd6;}
+.step p:last-child{margin-bottom:0;}
+.opt{font-family:var(--mono);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:1px;}
+section.prose{margin:34px 0 0;}
+section.prose h2{font-size:22px;letter-spacing:-0.4px;margin:0 0 10px;}
+section.prose h3{font-size:13px;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent2);font-family:var(--mono);margin:36px 0 2px;}
+section.prose p{margin:0 0 14px;color:#c7cdd6;}
+code{font-family:var(--mono);font-size:13px;color:var(--accent2);background:var(--surface2);padding:1.5px 6px;border-radius:5px;border:1px solid var(--border);}
+pre{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;overflow-x:auto;margin:14px 0;}
+pre code{background:none;border:none;padding:0;color:#c7cdd6;font-size:12.5px;line-height:1.7;}
+pre code .c{color:var(--faint);}
+a{color:var(--accent2);}
+.note{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin:36px 0;}
+.note h3{margin:0 0 10px;font-size:16px;}
+.note ul{margin:0;padding-left:18px;color:var(--muted);}
+.note li{margin-bottom:6px;}
+.note li b{color:var(--text);font-weight:600;}
+.pagenav{display:flex;gap:14px;margin-top:52px;}
+.pagenav a{flex:1;display:block;text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;transition:border-color .15s ease,transform .15s ease;}
+.pagenav a:hover{border-color:var(--accent);transform:translateY(-2px);}
+.pagenav .dir{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:4px;}
+.pagenav .tt{color:var(--text);font-weight:600;font-size:15px;}
+.pagenav .next{text-align:right;}
+.cta{margin-top:36px;background:linear-gradient(135deg,rgba(124,92,255,0.12),rgba(52,211,153,0.06));border:1px solid var(--border);border-radius:18px;padding:28px;text-align:center;}
+.cta h3{margin:0 0 6px;font-size:21px;letter-spacing:-0.3px;}
+.cta p{margin:0 0 16px;color:var(--muted);font-size:15px;}
+.btn{display:inline-block;background:var(--accent2);color:#052e1c;font-weight:700;padding:12px 22px;border-radius:11px;font-size:15px;text-decoration:none;}
+.btn:hover{filter:brightness(1.06);}
+.cta .ph{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px;}
+footer{margin-top:44px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:22px;}
+footer a{color:var(--muted);}
+.draftbar{background:rgba(245,158,11,0.09);border:1px solid rgba(245,158,11,0.35);color:#f5c26b;font-family:var(--mono);font-size:12px;border-radius:10px;padding:10px 14px;margin-bottom:28px;}
+.draftbar b{color:var(--warn);}
+.codeblock{position:relative;}
+.copybtn{position:absolute;top:9px;right:9px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);border-radius:7px;padding:4px 11px;font-family:var(--mono);font-size:11px;letter-spacing:0.5px;cursor:pointer;}
+.copybtn:hover{color:var(--accent2);border-color:var(--accent);}
+.copybtn.done{color:var(--accent2);border-color:var(--accent2);}
+.checks{list-style:none;padding:0;margin:16px 0 0;}
+.checks li{padding:12px 0;border-top:1px solid var(--border);color:var(--muted);font-size:14px;line-height:1.55;}
+.checks li:first-child{border-top:none;}
+.checks .lbl{color:var(--accent2);font-family:var(--mono);font-size:12px;margin-right:8px;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:1px 7px;}
+.runline{font-family:var(--mono);font-size:13px;color:var(--muted);margin:10px 0 0;}
+.joinsteps{display:flex;flex-direction:column;gap:10px;max-width:440px;margin:4px auto 14px;text-align:left;}
+.jbtn{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--text);text-decoration:none;transition:border-color .15s ease,transform .15s ease;}
+.jbtn:hover{border-color:var(--accent2);transform:translateY(-1px);}
+.jbtn b{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--accent2);color:#052e1c;font-family:var(--mono);font-weight:700;display:grid;place-items:center;font-size:14px;}
+.jbtn span{font-size:14px;line-height:1.45;color:var(--muted);}
+.jbtn strong{color:var(--text);font-weight:600;}
+@media (max-width:560px){h1{font-size:30px;}.lede{font-size:17px;}.step{padding-left:48px;}.pagenav{flex-direction:column;}.navlinks{gap:14px;}}
+</style>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><img class="logo" src="../logo.png" alt="TermHub"><strong>TermHub</strong></div>
+    <div class="navlinks"><a href="../">Home</a><a href="../#guides">All guides</a></div>
+  </div>
+  <span class="eyebrow">Guide</span>
+  <h1>The shortcut bar: agent keys, one tap away</h1>
+  <p class="lede">The row above TermHub's keyboard holds the keys a phone keyboard hides and a coding agent needs: esc, shift-tab, Ctrl-C, tab, ctrl, and the arrows. It's yours to rearrange, with more keys a swipe away and your saved commands one tap from the prompt.</p>
+
+  <video class="demo" src="media/shortcut-bar.mp4" poster="media/shortcut-bar-poster.jpg" autoplay loop muted playsinline aria-label="The shortcut bar in action: opening the keys panel, the command chips, and the editor."></video>
+  <p class="democap">The shortcut bar on a Galaxy S23, driving Claude Code in herdr.</p>
+
+  <section class="prose"><h2>Keys a coding agent needs</h2><p>Out of the box the bar is set up for driving Claude Code, Codex, or Pi: <b>esc</b> to interrupt, <b>&#8679;tab</b> to cycle modes, <b>^C</b> to cancel, <b>tab</b> to complete, <b>ctrl</b>, and the four arrows. Hold an arrow and it keeps moving. Prefer a different setup? Pick the <b>Shell</b>, <b>Vim</b>, or <b>tmux</b> preset instead.</p><img class="shot-crop" src="media/shortcut-bar.jpg" alt="TermHub's keyboard with the shortcut bar above the letters: esc, shift-tab, Ctrl-C, tab, ctrl, and arrows."></section>
+
+  <section class="prose"><h2>More keys, a swipe away</h2><p>Swipe up on the bar, or tap <b>&bull;&bull;&bull;</b>, and the letters give way to a panel of extra keys: alt, Ctrl-R, Ctrl-D, Ctrl-L, Ctrl-Z, common symbols, home and end, page up and down, paste, and send image. It sits in the same space as the letters, so nothing on screen jumps. Swipe down or tap <b>&bull;&bull;&bull;</b> again to get the letters back.</p><img class="shot-crop" src="media/shortcut-panel.jpg" alt="The keys panel open in place of the letters, with alt, control combos, symbols, navigation keys, paste, and image."></section>
+
+  <section class="prose"><h2>Your commands as chips</h2><p>Tap <b>{ }</b> and your saved commands appear as a row of chips right above the bar. <b>Tap</b> a chip to type the command so you can edit it first, or <b>long-press</b> to run it straight away. The &times; at the start of the row closes it.</p><img class="shot-crop" src="media/shortcut-chips.jpg" alt="Saved commands shown as chips above the shortcut bar: List files, Disk usage, Live processes."></section>
+
+  <section class="prose"><h2>Make it yours</h2><p>With the panel open, the key at the far right becomes a <b>gear</b>. Tap it to edit the bar in place: drag keys between the bar and the panel to reorder them, tap &times; to remove one, or tap any key in the list below to add it. <b>Done</b> saves, <b>Cancel</b> leaves everything as it was. Long-pressing a bar key is a shortcut into the same editor, and it's also under Settings &rsaquo; Keyboard &rsaquo; Shortcut bar.</p><img class="shot-crop" src="media/shortcut-editor.jpg" alt="The shortcut bar editor with presets, the keys on the bar, the keys in the panel, and Cancel and Done."></section>
+
+  <section class="prose"><h2>Modifiers and cursor moves</h2><p><b>Ctrl</b> and <b>Alt</b> apply to the next key you press, letters and bar keys alike, so Ctrl plus an arrow jumps a word. Double-tap either one to lock it on until you tap it again. To move the cursor along a long command, <b>hold the space bar and drag</b> sideways; each step moves one character, with a light tick.</p></section>
+
+  <div class="note">
+    <h3>Good to know</h3>
+    <ul>
+      <li><b>Part of the app keyboard.</b> The shortcut bar comes with TermHub's own keyboard (Settings &rsaquo; Keyboard &rsaquo; App keyboard), not the phone's system keyboard.</li>
+      <li><b>Backed up with everything else.</b> Your layout is included in TermHub's encrypted cloud backup, so it follows you to a new phone.</li>
+    </ul>
+  </div>
+
+  <nav class="pagenav">
+    <a href="../#guides"><span class="dir">&larr; Back</span><span class="tt">All guides</span></a>
+    <a class="next" href="voice.html"><span class="dir">Next &rarr;</span><span class="tt">Voice dictation</span></a>
+  </nav>
+
+  <div class="cta">
+    <h3>Get TermHub</h3>
+    <p>TermHub is live on Google Play. Install it and connect to your first host in a couple of minutes.</p>
+    <a class="playbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub" style="display:inline-block;margin:6px 0 2px;"><img src="../google-play-badge.png" alt="Get it on Google Play" style="display:block;height:76px;width:auto;" /></a>
+    <div class="ph">Free to install. If anything snags, <a href="mailto:lakson2@gmail.com">email us</a> and we'll walk you through it.</div>
+  </div>
+  <footer>
+    <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
+    <p><a href="../">Home</a> &middot; <a href="../#guides">All guides</a></p>
+  </footer>
+
+<script>
+document.querySelectorAll('pre').forEach(function(pre){
+  var text = pre.innerText;
+  var wrap = document.createElement('div'); wrap.className = 'codeblock';
+  pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+  var btn = document.createElement('button'); btn.type='button'; btn.className='copybtn'; btn.textContent='Copy';
+  btn.addEventListener('click', function(){
+    var done = function(){ btn.textContent='Copied'; btn.classList.add('done'); setTimeout(function(){ btn.textContent='Copy'; btn.classList.remove('done'); }, 1600); };
+    var fb = function(){ var t=document.createElement('textarea'); t.value=text; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.focus(); t.select(); try{ document.execCommand('copy'); done(); }catch(e){} document.body.removeChild(t); };
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, fb); } else { fb(); }
+  });
+  wrap.appendChild(btn);
+});
+</script>
+</div>
