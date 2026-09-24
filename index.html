@@ -95,6 +95,27 @@
       -webkit-mask-image: linear-gradient(#000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%);
               mask-image: linear-gradient(#000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%); }
     
+
+    /* Background previews, chosen with ?bg=rings|aurora|scan (review only). */
+    body[data-bg] { background: var(--bg); }
+    body[data-bg]::before { -webkit-mask-image: none; mask-image: none; }
+    body[data-bg="rings"]::before { background:
+      repeating-radial-gradient(circle at 56% 34%, transparent 0 58px, rgba(94,234,160,.07) 58px 59.5px),
+      radial-gradient(circle at 56% 34%, rgba(94,234,160,.16), transparent 38%); }
+    body[data-bg="aurora"]::before { background:
+      radial-gradient(40% 35% at 20% 10%, rgba(94,234,160,.16), transparent 70%),
+      radial-gradient(35% 40% at 85% 30%, rgba(80,170,255,.12), transparent 70%),
+      radial-gradient(45% 35% at 60% 95%, rgba(94,234,160,.09), transparent 70%);
+      filter: blur(20px); animation: drift 26s ease-in-out infinite alternate; }
+    @keyframes drift { to { transform: translate3d(-3%, 2%, 0) scale(1.06); } }
+    body[data-bg="scan"]::before { background:
+      repeating-linear-gradient(rgba(255,255,255,.028) 0 1px, transparent 1px 4px),
+      radial-gradient(60% 50% at 75% 40%, rgba(94,234,160,.13), transparent 70%),
+      linear-gradient(180deg, rgba(94,234,160,.05), transparent 40%); }
+    @media (prefers-reduced-motion: reduce) { body[data-bg="aurora"]::before { animation: none; } }
+    .bgpick { position: fixed; right: 16px; bottom: 16px; z-index: 5; display: flex; gap: 6px; padding: 6px; border-radius: 12px; background: rgba(31,34,41,.92); border: 1px solid var(--border); font-size: 13px; }
+    .bgpick a { color: var(--muted); text-decoration: none; padding: 5px 10px; border-radius: 8px; }
+    .bgpick a[aria-current] { background: var(--mint); color: var(--mint-ink); }
     footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
     footer a { color: var(--muted); }
 
@@ -225,6 +246,17 @@
           if (p && p.catch) p.catch(function () {});
         });
       });
+
+      var bg = new URLSearchParams(location.search).get('bg');
+      if (bg !== null) {
+        if (bg) document.body.dataset.bg = bg;
+        var pick = document.createElement('nav'); pick.className = 'bgpick'; pick.setAttribute('aria-label', 'Background preview');
+        [['', 'Current'], ['rings', 'Dial rings'], ['aurora', 'Aurora'], ['scan', 'Scanlines']].forEach(function (o) {
+          var a = document.createElement('a'); a.href = '?bg=' + o[0]; a.textContent = o[1];
+          if (o[0] === bg) a.setAttribute('aria-current', 'true'); pick.appendChild(a);
+        });
+        document.body.appendChild(pick);
+      }
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { video.removeAttribute('autoplay'); video.pause(); video.controls = true; }
     })();
   </script>
