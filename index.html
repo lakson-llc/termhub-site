@@ -47,7 +47,12 @@
 
     .demo { position: relative; padding-right: 186px; }
     .phone { width: 272px; aspect-ratio: 1440 / 3088; padding: 7px; border-radius: 36px; background: #0a0b0d; border: 1px solid var(--border); box-shadow: 0 30px 80px rgba(0,0,0,.55); }
-    .phone video { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 29px; background: #0a0b0d; }
+    .phone { position: relative; }
+    .screen { position: relative; width: 100%; height: 100%; border-radius: 29px; overflow: hidden; background: #0a0b0d; }
+    /* All three clips stay loaded and stacked; switching cross-fades between them. */
+    .screen video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; opacity: 0; transition: opacity .28s ease; }
+    .screen video.on { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .screen video { transition: none; } }
     /* Three buttons on an arc against the phone, like the app's dial satellites. */
     .sats { position: absolute; right: 0; top: 50%; transform: translateY(-50%); list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
     .sats li:nth-child(2) { transform: translateX(26px); }
@@ -140,17 +145,21 @@
 
         <div class="demo">
           <div class="phone">
-            <video id="demo" src="guides/media/shortcut-bar.mp4" poster="guides/media/shortcut-bar-poster.jpg" autoplay loop muted playsinline aria-describedby="caption"></video>
+            <div class="screen" aria-describedby="caption">
+              <video class="on" data-clip="bar" src="guides/media/shortcut-bar.mp4" poster="guides/media/shortcut-bar-first.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <video data-clip="dial" src="media/demo-dial.mp4" poster="media/demo-dial-first.jpg" loop muted playsinline preload="auto"></video>
+              <video data-clip="voice" src="media/demo-voice.mp4" poster="media/demo-voice-first.jpg" loop muted playsinline preload="auto"></video>
+            </div>
           </div>
           <p class="caption" id="caption">The shortcut bar: agent keys above the letters, more keys a swipe away.</p>
           <ul class="sats">
-            <li><button class="sat" type="button" aria-pressed="true" data-src="guides/media/shortcut-bar.mp4" data-poster="guides/media/shortcut-bar-poster.jpg" data-caption="The shortcut bar: agent keys above the letters, more keys a swipe away.">
+            <li><button class="sat" type="button" data-clip="bar" aria-pressed="true" data-caption="The shortcut bar: agent keys above the letters, more keys a swipe away.">
               <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7.5 14h9"/></svg></span><span class="l">Shortcut bar</span>
             </button></li>
-            <li><button class="sat" type="button" aria-pressed="false" data-src="media/demo-dial.mp4" data-poster="media/demo-dial.jpg" data-caption="The command dial: common keys, saved commands, voice, and images under one thumb.">
+            <li><button class="sat" type="button" data-clip="dial" aria-pressed="false" data-caption="The command dial: common keys, saved commands, voice, and images under one thumb.">
               <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3.2"/></svg></span><span class="l">Command dial</span>
             </button></li>
-            <li><button class="sat" type="button" aria-pressed="false" data-src="media/demo-voice.mp4" data-poster="media/demo-voice.jpg" data-caption="Voice: dictate a long prompt, transcribed on the phone.">
+            <li><button class="sat" type="button" data-clip="voice" aria-pressed="false" data-caption="Voice: dictate a long prompt, transcribed on the phone.">
               <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span><span class="l">Voice</span>
             </button></li>
           </ul>
@@ -209,22 +218,29 @@
   </div>
   <script>
     (function () {
-      var video = document.getElementById('demo');
+      var clips = document.querySelectorAll('.screen video');
       var caption = document.getElementById('caption');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var sats = document.querySelectorAll('.sat');
       sats.forEach(function (btn) {
         btn.addEventListener('click', function () {
           if (btn.getAttribute('aria-pressed') === 'true') return;
           sats.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-          video.poster = btn.dataset.poster;
-          video.src = btn.dataset.src;
           caption.textContent = btn.dataset.caption;
-          var p = video.play();
-          if (p && p.catch) p.catch(function () {});
+          clips.forEach(function (v) {
+            var on = v.dataset.clip === btn.dataset.clip;
+            if (on) {
+              v.currentTime = 0;
+              if (!reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+            } else {
+              v.pause();
+            }
+            v.classList.toggle('on', on);
+          });
         });
       });
 
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { video.removeAttribute('autoplay'); video.pause(); video.controls = true; }
+      if (reduce) clips.forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
     })();
   </script>
 </body>
