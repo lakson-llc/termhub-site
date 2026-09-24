@@ -112,6 +112,15 @@
         radial-gradient(60% 50% at 75% 40%, rgba(94,234,160,.13), transparent 70%),
         linear-gradient(180deg, rgba(94,234,160,.05), transparent 40%); }
 
+
+    /* Feedback: one quiet row, two actions, no form. */
+    .feedback { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 26px 0 30px; border-top: 1px solid var(--border); }
+    .feedback h2 { margin: 0 0 4px; }
+    .feedback p { margin: 0; color: var(--muted); font-size: 15px; max-width: 52ch; }
+    .feedback .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+    .feedback .acts a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; font-size: 15px; font-weight: 500; }
+    .feedback .acts a:hover { border-color: var(--mint); }
+    .feedback .acts a.primary { background: var(--mint); color: var(--mint-ink); border-color: var(--mint); }
     footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
     footer a { color: var(--muted); }
 
@@ -139,7 +148,7 @@
   <div class="wrap">
     <header class="topbar">
       <a class="brand" href="./"><img src="logo.png" alt="" />TermHub</a>
-      <nav><a href="#guides">Guides</a><a href="mailto:lakson2@gmail.com">Contact</a></nav>
+      <nav><a href="#guides">Guides</a><a href="#feedback">Feedback</a></nav>
     </header>
 
     <main>
@@ -223,11 +232,22 @@
           </ol>
         </div>
       </section>
+
+      <section class="feedback" id="feedback">
+        <div>
+          <h2>Found a bug? Have an idea?</h2>
+          <p>Tell me directly. Including your TermHub version (Settings &rsaquo; About) and phone model makes a bug much faster to fix.</p>
+        </div>
+        <div class="acts">
+          <a class="primary" href="mailto:lakson2@gmail.com?subject=TermHub%20bug%20report&amp;body=What%20happened%3A%0A%0A%0AWhat%20you%20expected%3A%0A%0A%0ASteps%20to%20reproduce%3A%0A1.%20%0A2.%20%0A3.%20%0A%0A---%0ATermHub%20version%20%28Settings%20%3E%20About%29%3A%0APhone%20model%3A%0A">Report a bug</a>
+          <a href="mailto:lakson2@gmail.com?subject=TermHub%20feedback&amp;body=What%20would%20make%20TermHub%20better%20for%20you%3F%0A%0A">Suggest an idea</a>
+        </div>
+      </section>
     </main>
 
     <footer>
       <span>TermHub is published by Lakson LLC. <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></span>
-      <a href="privacy.html">Privacy Policy</a>
+      <span><a href="#feedback">Feedback and bugs</a> &middot; <a href="privacy.html">Privacy Policy</a></span>
     </footer>
   </div>
   <script>
