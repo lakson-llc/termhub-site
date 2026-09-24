@@ -230,10 +230,18 @@
           clips.forEach(function (v) {
             var on = v.dataset.clip === btn.dataset.clip;
             if (on) {
-              v.currentTime = 0;
-              if (!reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-            } else {
+              // Always restart from the first frame: seek while paused, then
+              // play only once the seek has landed.
               v.pause();
+              var start = function () {
+                if (!reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+              };
+              if (v.currentTime === 0) { start(); }
+              else { v.addEventListener('seeked', start, { once: true }); v.currentTime = 0; }
+            } else if (!v.paused || v.currentTime !== 0) {
+              v.pause();
+              // Rewind after it has faded out, so it is ready at frame one.
+              setTimeout(function () { if (!v.classList.contains('on')) v.currentTime = 0; }, 320);
             }
             v.classList.toggle('on', on);
           });
