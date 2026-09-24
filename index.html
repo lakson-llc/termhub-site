@@ -4,107 +4,229 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TermHub</title>
+  <meta name="description" content="TermHub is an SSH terminal for Android built to drive Claude Code, Codex, and Pi in tmux or herdr from your phone." />
   <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root { --bg:#0d0f14; --surface:#161a22; --surface2:#1b2029; --border:#262b36; --text:#e6e9ef; --muted:#9aa4b2; --faint:#6b7482; --accent:#7c5cff; --accent2:#34d399; --mono:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    /* Tokens are the app's own termhub-dark palette and its IBM Plex fonts,
+       so the page looks like the product rather than a template. */
+    :root {
+      --bg: #15171c; --surface: #1f2229; --border: #2c303a;
+      --text: #f5f7fa; --muted: #8a8f98; --mint: #5eeaa0; --mint-ink: #0c2a1c; --amber: #f2c46d;
+      --sans: "IBM Plex Sans", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 44px 24px 96px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .logo { width: 46px; height: 46px; border-radius: 12px; box-shadow: 0 0 24px rgba(52,211,153,0.45); }
-    .topnav a { color: var(--accent2); text-decoration: none; font-size: 15px; border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px; white-space: nowrap; }
-    .topnav a:hover { border-color: var(--accent2); }
-    h1 { font-size: 40px; margin: 28px 0 10px; letter-spacing: -0.5px; }
-    .tag { color: var(--muted); font-size: 19px; margin: 0 0 8px; max-width: 60ch; }
-    .sec { margin-top: 52px; }
-    .eyebrow { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-    .sec h2 { font-size: 26px; letter-spacing: -0.5px; margin: 0 0 8px; }
-    .sec .sub { color: var(--muted); margin: 0 0 22px; max-width: 60ch; }
-    .edges { list-style: none; padding: 0; margin: 6px 0 0; }
-    .edges li { padding: 14px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 15px; line-height: 1.55; }
-    .edges li:first-child { border-top: none; }
-    .edges li b { color: var(--text); font-weight: 600; }
-    .caveats { margin-top: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; font-size: 14px; color: var(--muted); line-height: 1.6; }
-    .caveats b { color: var(--text); }
-    .gcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .gcard { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; color: var(--text); text-decoration: none; transition: border-color .15s ease, transform .15s ease, background .15s ease; }
-    .gcard:last-child:nth-child(odd) { grid-column: 1 / -1; }
-    .gcard:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface2); }
-    .gcard .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
-    .gcard h3 { font-size: 16px; margin: 0; letter-spacing: -0.2px; }
-    .gcard p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
-    .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.9px; text-transform: uppercase; color: var(--accent2); border: 1px solid rgba(52,211,153,0.4); background: rgba(52,211,153,0.07); border-radius: 20px; padding: 2px 8px; }
-    .early { background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(52,211,153,0.06)); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; margin-top: 52px; }
-    .early h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px; }
-    .early > p { margin: 0 0 16px; color: var(--muted); }
-    .joinsteps { display: flex; flex-direction: column; gap: 10px; max-width: 460px; }
-    .jbtn { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); text-decoration: none; }
-    .jbtn:hover { border-color: var(--accent2); }
-    .jbtn b { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent2); color: #052e1c; font-family: var(--mono); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
-    .jbtn span { font-size: 14px; line-height: 1.45; color: var(--muted); }
-    .jbtn strong { color: var(--text); font-weight: 600; }
-    .playbtn { display: inline-block; margin: 6px 0 2px; }
-    .playbtn img { display: block; height: 76px; width: auto; }
-    .early .note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
-    footer { margin-top: 52px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 24px; }
-    a { color: var(--accent2); }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: var(--text); text-decoration-color: var(--mint); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; border-radius: 6px; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+    .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+    .brand img { width: 46px; height: 46px; border-radius: 12px; box-shadow: 0 0 24px rgba(94,234,160,.4); }
+    .topbar nav { display: flex; gap: 28px; font-size: 16px; }
+    .topbar nav a { color: var(--muted); text-decoration: none; }
+    .topbar nav a:hover { color: var(--text); }
+
+    /* Hero: a big two-line headline across the page, then the pitch beside the phone. */
+    h1 { font-weight: 700; font-size: clamp(40px, 5.6vw, 68px); line-height: 0.98; letter-spacing: -0.045em; margin: 0 0 28px; }
+    h1 span { display: block; }
+    h1 .dim { color: #6d737d; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: center; margin-top: 18px; }
+    .pitch { min-width: 0; }
+    .lede { color: #b9bec7; font-size: 18px; line-height: 1.55; margin: 0 0 24px; max-width: 46ch; }
+    .keys { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; padding: 0; list-style: none; }
+    .keys li { font: 500 15px var(--mono); padding: 7px 13px; border: 1px solid var(--border); border-bottom-width: 3px; border-radius: 8px; background: var(--surface); }
+    .keys-note { color: var(--muted); font-size: 14px; margin: 0 0 30px; }
+    .get { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    .get img { height: 56px; width: auto; display: block; }
+    .get p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .demo { position: relative; padding-right: 186px; }
+    .phone { width: 272px; aspect-ratio: 1440 / 3088; padding: 7px; border-radius: 36px; background: #0a0b0d; border: 1px solid var(--border); box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+    .phone video { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 29px; background: #0a0b0d; }
+    /* Three buttons on an arc against the phone, like the app's dial satellites. */
+    .sats { position: absolute; right: 0; top: 50%; transform: translateY(-50%); list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; }
+    .sats li:nth-child(2) { transform: translateX(26px); }
+    .sat { display: flex; align-items: center; gap: 12px; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: var(--muted); text-align: left; margin-left: -34px; }
+    .sat .knob { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; color: var(--mint); background: rgba(21,23,28,.86); border: 1.5px solid rgba(94,234,160,.55); backdrop-filter: blur(6px); }
+    .sat .knob svg { width: 25px; height: 25px; }
+    .sat span.l { font-size: 15px; font-weight: 500; white-space: nowrap; }
+    .sat:hover span.l, .sat[aria-pressed="true"] span.l { color: var(--text); }
+    .sat[aria-pressed="true"] .knob { background: var(--mint); color: var(--mint-ink); border-color: var(--mint); box-shadow: 0 0 28px rgba(94,234,160,.5); }
+    .caption { color: var(--muted); font-size: 14px; margin: 12px 0 0; width: 272px; text-align: center; min-height: 3em; }
+
+    /* One row of proof: each fact shown with a small piece of the real app. */
+    .proof { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: 40px; }
+    .proof > div { padding: 22px 22px 24px; border-left: 1px solid var(--border); min-width: 0; }
+    .proof > div:first-child { border-left: 0; padding-left: 0; }
+    .proof h3 { font-size: 16px; font-weight: 600; margin: 0 0 6px; }
+    .proof p { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 14px; }
+    .ui { font: 400 12.5px/1.5 var(--mono); background: #101216; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; color: #c9ced6; overflow: hidden; }
+    .ui .row { display: flex; justify-content: space-between; gap: 8px; white-space: nowrap; }
+    .ui .ok { color: var(--mint); }
+    .ui .mute { color: var(--muted); }
+    .ui .warn { color: var(--amber); }
+    .toast { display: flex; gap: 10px; align-items: flex-start; font-family: var(--sans); font-size: 13px; }
+    .toast img { width: 22px; height: 22px; border-radius: 6px; flex: 0 0 auto; margin-top: 1px; }
+    .toast b { display: block; color: var(--text); font-weight: 600; }
+
+    /* Below: plain columns, no cards. */
+    .more { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 64px; padding: 40px 0 36px; }
+    h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 14px; }
+    .story p { color: #c9ced6; font-size: 16.5px; margin: 0 0 14px; max-width: 58ch; }
+    .guides ol { list-style: none; margin: 0; padding: 0; }
+    .guides a { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; }
+    .guides li:first-child a { padding-top: 0; }
+    .guides a:hover .t { color: var(--mint); }
+    .guides .d { color: var(--muted); font-size: 14px; text-align: right; }
+    .guides .fresh { color: var(--mint); font-size: 13px; margin-left: 8px; }
+
+
+    /* Subtle page backdrop: a faint mint glow at the top over a barely visible
+       grid of dots, like terminal character cells, fading out down the page. */
+    body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -8%, rgba(94,234,160,.10), transparent 70%),
+        radial-gradient(rgba(255,255,255,.075) 1px, transparent 1.2px) 0 0 / 22px 22px;
+      -webkit-mask-image: linear-gradient(#000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%);
+              mask-image: linear-gradient(#000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%); }
+    
+    footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
     footer a { color: var(--muted); }
-    @media (max-width: 560px) { h1 { font-size: 32px; } .gcards { grid-template-columns: 1fr; } }
+
+    @media (max-width: 980px) {
+      .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .proof > div:nth-child(3) { border-left: 0; padding-left: 0; }
+      .proof > div:nth-child(n+3) { border-top: 1px solid var(--border); }
+    }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; gap: 32px; margin-top: 24px; }
+      .demo { padding-right: 0; margin-top: 0; display: flex; flex-direction: column; align-items: center; }
+      .sats { position: static; transform: none; flex-direction: row; gap: 18px; margin-top: 18px; }
+      .sats li:nth-child(2) { transform: none; }
+      .sat { flex-direction: column; margin-left: 0; gap: 6px; }
+      .more { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 560px) {
+      .proof { grid-template-columns: 1fr; }
+      .proof > div { border-left: 0; padding-left: 0; padding-right: 0; }
+      .proof > div + div { border-top: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="brand"><img class="logo" src="logo.png" alt="TermHub" /><strong style="font-size:18px;">TermHub</strong></div>
-      <nav class="topnav"><a href="#get">Install &rarr;</a></nav>
-    </div>
+    <header class="topbar">
+      <a class="brand" href="./"><img src="logo.png" alt="" />TermHub</a>
+      <nav><a href="#guides">Guides</a><a href="mailto:lakson2@gmail.com">Contact</a></nav>
+    </header>
 
-    <h1>A fast, modern SSH terminal for Android.</h1>
-    <p class="tag">TermHub is a real terminal for your phone, not a remote-control wrapper. Connect straight to your own machines, drive tmux or herdr, and run any CLI like Claude Code, Codex, or Pi, with a command dial for the keys a phone keyboard makes painful. Your credentials never leave the device keystore, and there is no TermHub server in the middle.</p>
+    <main>
+      <section class="hero">
+        <div class="pitch">
+          <h1><span>Drive your</span><span>coding agent</span><span class="dim">from your phone.</span></h1>
+          <p class="lede">TermHub is an SSH terminal for Android built around Claude Code, Codex, and Pi in tmux or herdr. A command dial and a shortcut bar give you the keys a phone keyboard hides, and nothing sits between you and your machine.</p>
+          <ul class="keys" aria-label="Keys on the shortcut bar">
+            <li>esc</li><li>&#8679;tab</li><li>^C</li><li>tab</li><li>ctrl</li><li>&larr;</li><li>&uarr;</li><li>&darr;</li><li>&rarr;</li>
+          </ul>
+          <p class="keys-note">Always one tap away, right above the letters.</p>
+          <div class="get">
+            <a href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><img src="google-play-badge.png" alt="Get it on Google Play" /></a>
+            <p>Free on Android.<br />No account, no server in the middle.</p>
+          </div>
+        </div>
 
-    <div class="sec" id="guides">
-      <span class="eyebrow">Guides</span>
-      <h2>Set up and get connected</h2>
-      <p class="sub">Everything from your first connection to running a coding agent in tmux or herdr. Each guide takes a few minutes and uses real screenshots.</p>
-      <div class="gcards">
-        <a class="gcard" href="guides/getting-started.html"><div class="row"><h3>Getting started</h3><span class="pill">Start here</span></div><p>Install, add a host, sign in, connect, and drive the Command Dial without the keyboard.</p></a>
-        <a class="gcard" href="guides/tailscale.html"><div class="row"><h3>Reach any server with Tailscale</h3></div><p>A private path in with no port forwarding, plus the LAN and tailnet fallback trick.</p></a>
-        <a class="gcard" href="guides/agents.html"><div class="row"><h3>Run Claude Code, Codex, or Pi</h3></div><p>Keep an agent alive in tmux or herdr and steer it from the dial, no keyboard needed.</p></a>
-        <a class="gcard" href="guides/keyboard.html"><div class="row"><h3>Shortcut bar</h3><span class="pill">New</span></div><p>Agent keys above the keyboard, more keys a swipe away, and your commands as one-tap chips.</p></a>
-        <a class="gcard" href="guides/voice.html"><div class="row"><h3>Voice dictation</h3></div><p>On-device speech to text with punctuation, straight into the terminal line.</p></a>
-        <a class="gcard" href="guides/backup.html"><div class="row"><h3>Encrypted cloud backup</h3></div><p>Move your hosts to a new phone, encrypted with a passphrase only you hold.</p></a>
-        <a class="gcard" href="guides/host-check.html"><div class="row"><h3>Host check</h3></div><p>Make sure your host is phone-ready, from tmux and herdr visibility to sleep.</p></a>
-      </div>
-    </div>
+        <div class="demo">
+          <div class="phone">
+            <video id="demo" src="guides/media/shortcut-bar.mp4" poster="guides/media/shortcut-bar-poster.jpg" autoplay loop muted playsinline aria-describedby="caption"></video>
+          </div>
+          <p class="caption" id="caption">The shortcut bar: agent keys above the letters, more keys a swipe away.</p>
+          <ul class="sats">
+            <li><button class="sat" type="button" aria-pressed="true" data-src="guides/media/shortcut-bar.mp4" data-poster="guides/media/shortcut-bar-poster.jpg" data-caption="The shortcut bar: agent keys above the letters, more keys a swipe away.">
+              <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7.5 14h9"/></svg></span><span class="l">Shortcut bar</span>
+            </button></li>
+            <li><button class="sat" type="button" aria-pressed="false" data-src="media/demo-dial.mp4" data-poster="media/demo-dial.jpg" data-caption="The command dial: common keys, saved commands, voice, and images under one thumb.">
+              <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3.2"/></svg></span><span class="l">Command dial</span>
+            </button></li>
+            <li><button class="sat" type="button" aria-pressed="false" data-src="media/demo-voice.mp4" data-poster="media/demo-voice.jpg" data-caption="Voice: dictate a long prompt, transcribed on the phone.">
+              <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span><span class="l">Voice</span>
+            </button></li>
+          </ul>
+        </div>
+      </section>
 
-    <div class="sec">
-      <span class="eyebrow">Why TermHub</span>
-      <h2>Built to drive a coding agent from your phone</h2>
-      <p class="sub">Most SSH clients are general-purpose terminals. TermHub is sharper. It is built to run and steer a coding agent on your own machine, from your phone.</p>
-      <ul class="edges">
-        <li><b>Out-of-band multiplexer control.</b> tmux and herdr window and pane commands run on a separate SSH channel, so they never get typed into your agent as input. No general SSH client documents this.</li>
-        <li><b>Keyboardless Command Dial.</b> A radial control for common keys, arrows, snippets, and voice. The soft keyboard only comes up when you type a long command.</li>
-        <li><b>A keyboard built for agents.</b> A shortcut bar puts esc, shift-tab, Ctrl-C, tab, ctrl, and arrows above the letters, with more keys a swipe away and your saved commands as one-tap chips. Rearrange it any way you like. <a href="guides/keyboard.html">See the shortcut bar guide</a>.</li>
-        <li><b>No backend, no account.</b> Your keys live in the device's secure keystore and connect straight to your host. Nothing routes through a TermHub server.</li>
-        <li><b>On-device voice and encrypted backup.</b> Dictation is transcribed on the phone. Backups are encrypted with a passphrase only you hold, in your own Google Drive.</li>
-      </ul>
-      <div class="caveats"><b>What it doesn't do:</b> no port forwarding, jump hosts, or SFTP file browser (Send Image only). SSH only, no Mosh; a dropped connection is reconnect-and-reattach, lossless with tmux or herdr. Nothing happens while the app is closed.</div>
-    </div>
+      <section class="proof" aria-label="What else it does">
+        <div>
+          <h3>Know when it's done</h3>
+          <p>Your phone buzzes when Claude Code, Codex, or OpenCode finishes a turn.</p>
+          <div class="ui toast"><img src="logo.png" alt="" /><span><b>technewsyt</b>Claude finished &middot; technewsyt</span></div>
+        </div>
+        <div>
+          <h3>Send a screenshot</h3>
+          <p>Pick photos and TermHub uploads them and types the path for your agent.</p>
+          <div class="ui"><span class="ok">&#10095;</span> read ~/.termhub-uploads/<br />&nbsp;&nbsp;termhub-4F2A.png</div>
+        </div>
+        <div>
+          <h3>Home or away</h3>
+          <p>Add a Tailscale address as a fallback and it connects from any network.</p>
+          <div class="ui"><div class="row"><span>192.168.1.67</span><span class="mute">timed out</span></div><div class="row"><span>macbook.tailnet</span><span class="ok">&#9679; live</span></div></div>
+        </div>
+        <div>
+          <h3>Your keys stay yours</h3>
+          <p>Keys live in the phone's keystore. Backups are encrypted with a passphrase only you know.</p>
+          <div class="ui"><div class="row"><span>Drive backup</span><span class="ok">encrypted</span></div><div class="row"><span>passphrase</span><span class="mute">on this phone</span></div></div>
+        </div>
+      </section>
 
-    <div class="early" id="get">
-      <h2>Get TermHub</h2>
-      <p>TermHub is live on Google Play. Install it and connect to your first host in a couple of minutes.</p>
-      <a class="playbtn" href="https://play.google.com/store/apps/details?id=com.lakson.termhub"><img src="google-play-badge.png" alt="Get it on Google Play" /></a>
-      <p class="note">Free to install. Questions? Email <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a>.</p>
-    </div>
+      <section class="more">
+        <div class="story">
+          <h2>Why I built it</h2>
+          <p>I kept walking away from my desk while an agent was halfway through a task. Checking in from my phone meant fighting the keyboard: no esc, no shift-tab, no Ctrl-C, and a tmux prefix that took three taps.</p>
+          <p>So I built the terminal I wanted. A dial for the keys you press all the time, a bar for the rest, voice for long prompts, and a notification when the agent finishes. No server in the middle and no account. It connects straight to your machine.</p>
+          <p>If something about it annoys you, <a href="mailto:lakson2@gmail.com">email me</a> and I will fix it.</p>
+        </div>
+        <div class="guides" id="guides">
+          <h2>Guides</h2>
+          <ol>
+            <li><a href="guides/getting-started.html"><span class="t">Getting started</span><span class="d">Install and connect</span></a></li>
+            <li><a href="guides/agents.html"><span class="t">Run Claude Code, Codex, or Pi</span><span class="d">tmux and herdr</span></a></li>
+            <li><a href="guides/keyboard.html"><span class="t">Shortcut bar<span class="fresh">new</span></span><span class="d">The keyboard</span></a></li>
+            <li><a href="guides/tailscale.html"><span class="t">Reach any server with Tailscale</span><span class="d">Networking</span></a></li>
+            <li><a href="guides/voice.html"><span class="t">Voice dictation</span><span class="d">On-device</span></a></li>
+            <li><a href="guides/backup.html"><span class="t">Encrypted cloud backup</span><span class="d">Move to a new phone</span></a></li>
+            <li><a href="guides/host-check.html"><span class="t">Host check</span><span class="d">Get your machine ready</span></a></li>
+          </ol>
+        </div>
+      </section>
+    </main>
 
     <footer>
-      <p>TermHub is published by Lakson LLC. Questions? <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></p>
-      <p><a href="./privacy.html">Privacy Policy</a></p>
-  <p style="font-size:12px;color:var(--faint);margin-top:10px;">Site updated 2026-09-24 04:30 UTC</p>
+      <span>TermHub is published by Lakson LLC. <a href="mailto:lakson2@gmail.com">lakson2@gmail.com</a></span>
+      <a href="privacy.html">Privacy Policy</a>
     </footer>
   </div>
+  <script>
+    (function () {
+      var video = document.getElementById('demo');
+      var caption = document.getElementById('caption');
+      var sats = document.querySelectorAll('.sat');
+      sats.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (btn.getAttribute('aria-pressed') === 'true') return;
+          sats.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+          video.poster = btn.dataset.poster;
+          video.src = btn.dataset.src;
+          caption.textContent = btn.dataset.caption;
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        });
+      });
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { video.removeAttribute('autoplay'); video.pause(); video.controls = true; }
+    })();
+  </script>
 </body>
 </html>

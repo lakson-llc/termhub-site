@@ -1,0 +1,46 @@
+/* Shared look for every page: TermHub's own termhub-dark palette and IBM Plex
+   fonts, loaded after each guide's inline styles so it re-skins them. */
+:root {
+  --bg: #15171c; --surface: #1f2229; --surface2: #262a32; --border: #2c303a;
+  --text: #f5f7fa; --muted: #8a8f98; --faint: #6d737d;
+  --mint: #5eeaa0; --mint-ink: #0c2a1c;
+  --accent: #5eeaa0; --accent2: #5eeaa0;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+body { background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; border-radius: 6px; }
+
+/* Header, identical on every page. */
+.site-top { max-width: 1120px; margin: 0 auto; padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; }
+.site-top .brand { display: flex; align-items: center; gap: 14px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+.site-top .brand img { width: 46px; height: 46px; border-radius: 12px; box-shadow: 0 0 24px rgba(94,234,160,.4); }
+.site-top nav { display: flex; gap: 28px; font-size: 16px; }
+.site-top nav a { color: var(--muted); text-decoration: none; }
+.site-top nav a:hover { color: var(--text); }
+
+/* Guide pages: tighter, calmer type in the app's fonts. */
+.wrap { padding-top: 10px; }
+h1 { font-family: var(--sans); font-weight: 700; letter-spacing: -0.035em; }
+h2, h3 { font-family: var(--sans); }
+.lede { color: #b9bec7; }
+.step p, section.prose p { color: #c9ced6; }
+code, pre, .copybtn, .opt, .checks .lbl, .runline { font-family: var(--mono); }
+pre { background: #101216; border-left-color: var(--mint); }
+.step::after { color: var(--mint); background: var(--surface); }
+.shot-img, .shot-wide, .shot-crop, .demo { border-color: var(--border); }
+.pagenav a { background: var(--surface); }
+.pagenav a:hover { border-color: var(--mint); transform: none; }
+.pagenav .dir { font-family: var(--sans); text-transform: none; letter-spacing: 0; font-size: 13px; }
+.cta { background: var(--surface); }
+.pill { text-transform: none; letter-spacing: 0; font-family: var(--sans); }
+footer { border-top-color: var(--border); }
+
+/* Subtle page backdrop: a faint mint glow at the top over a barely visible
+   grid of dots, like terminal character cells, fading out down the page. */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -8%, rgba(94,234,160,.10), transparent 70%),
+    radial-gradient(rgba(255,255,255,.075) 1px, transparent 1.2px) 0 0 / 22px 22px;
+  -webkit-mask-image: linear-gradient(#000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%);
+          mask-image: linear-gradient(#000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%); }
