@@ -122,7 +122,7 @@ User        you
 Auth        Automatic
 Startup     attach tmux/herdr session "work"</code></pre></li>
     <li class="step"><h2>Add a LAN shortcut as the fallback</h2><p>Set your fast LAN address as the primary and the Tailscale name as the fallback. At home you connect over the local network; everywhere else TermHub falls through to the tailnet. It only ever falls through when an address is <em>unreachable</em>, never because of a key or auth problem, and it flags a LAN-only primary so you know to add the remote one.</p><img class="shot-img" src="media/tailscale-12.jpg" alt="The local-only hint prompting for a Tailscale or remote fallback, with the keyless Tailscale SSH note below."></li>
-    <li class="step"><h2>Reconnect and reattach</h2><p>Point the host's startup at a tmux or herdr session so every reconnect reattaches instead of starting fresh. When the phone sleeps or the network changes, the work on the host keeps going and you rejoin it losslessly.</p></li>
+    <li class="step"><h2>Reconnect and reattach</h2><p>Point the host's startup at a Herdr or tmux session so every reconnect reattaches instead of starting fresh. When the phone sleeps or the network changes, the work on the host keeps going and you rejoin it losslessly.</p></li>
   </ol>
   <div class="note">
     <h3>Good to know</h3>

@@ -158,7 +158,7 @@ echo &quot;Done, any FAIL or WARN is explained on the page you copied this from.
     <li><span class="lbl">tmux / herdr</span> Installed <em>and</em> visible to a non-login SSH. A <code>FAIL</code> here is the one that bites people.</li>
     <li><span class="lbl">SLEEP</span> The Mac won't fall asleep and drop your session while you're away.</li>
   </ul></section>
-  <section class="prose"><h2>The multiplexer your phone can't see</h2><p>On Apple-Silicon Homebrew hosts, <code>/opt/homebrew/bin</code> is often added from <code>~/.zprofile</code>, which a non-login SSH never reads, so a healthy tmux or herdr comes back as a <code>FAIL</code>. Fix it by adding Homebrew's path to your shell's non-login startup so every SSH session can find it:</p><pre><code><span class="c"># add to ~/.zshenv</span>
+  <section class="prose"><h2>The multiplexer your phone can't see</h2><p>On Apple-Silicon Homebrew hosts, <code>/opt/homebrew/bin</code> is often added from <code>~/.zprofile</code>, which a non-login SSH never reads, so a healthy Herdr or tmux comes back as a <code>FAIL</code>. Fix it by adding Homebrew's path to your shell's non-login startup so every SSH session can find it:</p><pre><code><span class="c"># add to ~/.zshenv</span>
 export PATH="/opt/homebrew/bin:$PATH"</code></pre></section>
   <section class="prose"><h2>Keeping the host awake</h2><p>A phone terminal can't wake a sleeping Mac. For a machine that should stay reachable, especially an overnight agent, set Energy Saver so it doesn't sleep, or run <code>caffeinate</code> while it matters.</p></section>
   <div class="note">
